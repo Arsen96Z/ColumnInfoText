@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="SolzetControls" constructor="ColumnInfoText" version="0.0.1" display-name-key="Column Info Text" description-key="Column Info Text description" control-type="standard" >
+    <external-service-usage enabled="false">
+    </external-service-usage>
+    <property name="anchor" display-name-key="Anchor_Display_Key" description-key="Anchor_Desc_Key" of-type="Multiple" usage="bound" required="false" />
+    <property name="configJson" display-name-key="ConfigJson_Display_Key" description-key="Colored info under fields by exact value match. JSON: { fields:[{ field, type?, dedupe?, wrap?, maxLength?, options:[{ value, info, background, textColor?, wrap?, maxLength? }] }] }. type optional/auto-detected. value format -&gt; choice/bool/multiselect: number (bool 0/1); text: string (case-insensitive); number/currency: dot decimal e.g. 0.5; date: YYYY-MM-DD. Full copy-paste example in the EXAMPLE_CONFIG constant in index.ts and the solution README." of-type="Multiple" usage="input" required="false" />
+    <resources>
+      <code path="index.ts" order="1"/>
+      <css path="css/ColumnInfoText.css" order="1" />
+    </resources>
+  </control>
+</manifest>
