@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-  <control namespace="SolzetControls" constructor="ColumnInfoText" version="0.0.1" display-name-key="Column Info Text" description-key="Column Info Text description" control-type="standard" >
+  <control namespace="SolzetControls" constructor="ColumnInfoText" version="0.0.2" display-name-key="Column Info Text" description-key="Column Info Text description" control-type="standard" >
     <external-service-usage enabled="false">
     </external-service-usage>
     <property name="anchor" display-name-key="Anchor_Display_Key" description-key="Anchor_Desc_Key" of-type="Multiple" usage="bound" required="false" />

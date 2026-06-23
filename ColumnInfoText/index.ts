@@ -152,6 +152,11 @@ function removeMountHideStyle(): void {
     }
 }
 
+interface XrmPageUi {
+    tabs: { get(): XrmTab[] };
+    getFormType?(): number;
+}
+
 interface OptionEntry {
     value: string | number;
     info: string;
@@ -189,7 +194,7 @@ interface XrmTab {
 interface XrmPage {
     getAttribute(name: string): XrmAttribute | null;
     getControl(name: string): XrmControl | null;
-    ui: { tabs: { get(): XrmTab[] } };
+    ui: XrmPageUi;
 }
 
 interface XrmWithPage {
@@ -210,6 +215,32 @@ function getXrm(): XrmWithPage | null {
         // Xrm may be inaccessible across origins
     }
     return null;
+}
+
+function isLiveForm(xrm: XrmWithPage | null): boolean {
+    try {
+        if (!xrm || !xrm.Page || !xrm.Page.ui) {
+            return false;
+        }
+        const ft = xrm.Page.ui.getFormType && xrm.Page.ui.getFormType();
+        return typeof ft === "number" && ft > 0;
+    } catch {
+        return false;
+    }
+}
+
+function tryMountHideStyle(context: ComponentFramework.Context<IInputs>): void {
+    try {
+        if (!isLiveForm(getXrm())) {
+            return;
+        }
+        const logicalName = context.parameters.anchor.attributes?.LogicalName;
+        if (logicalName) {
+            installMountHideStyle(logicalName);
+        }
+    } catch {
+        // mount column name unavailable
+    }
 }
 
 function parseConfig(
@@ -498,14 +529,7 @@ export class ColumnInfoText implements ComponentFramework.StandardControl<IInput
         _state: ComponentFramework.Dictionary,
         _container: HTMLDivElement
     ): void {
-        try {
-            const logicalName = context.parameters.anchor.attributes?.LogicalName;
-            if (logicalName) {
-                installMountHideStyle(logicalName);
-            }
-        } catch {
-            // mount column name unavailable
-        }
+        tryMountHideStyle(context);
 
         this.context = context;
         this.injectAllBound = () => {
@@ -517,6 +541,7 @@ export class ColumnInfoText implements ComponentFramework.StandardControl<IInput
 
     public updateView(context: ComponentFramework.Context<IInputs>): void {
         this.context = context;
+        tryMountHideStyle(context);
         this.injectAll();
     }
 
