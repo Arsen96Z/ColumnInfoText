@@ -10,7 +10,7 @@ A **controller** Power Apps Component Framework (PCF) control for model-driven a
 - Reads a JSON config that lists one or more fields and the info text to show for each **exact** value.
 - Watches field values and visibility on the form (via Xrm) and **injects** styled info blocks directly under each field’s native control in the DOM.
 - Leaves choice, text, and other controls **native and editable** — only the help text is added below.
-- Uses one hidden multiline column on the form as a **mount point** (the control must stay on the form to run, but the mount row is collapsed to ~0px).
+- Uses one hidden multiline column on the form as a **mount point** (the control must stay on the form to run, but the mount row is collapsed to ~0px at runtime).
 
 Each info block supports custom background and text color, optional text wrapping, truncation with hover for full text, and optional deduplication when several selected values would show the same message.
 
@@ -53,7 +53,7 @@ Best on **main entity forms** where users set or review key fields and need imme
 ## Architecture (short)
 
 ```
-[ Hidden anchor column + ColumnInfoText PCF ]  ← one per form, ~0px footprint
+[ Hidden anchor column + ColumnInfoText PCF ]  ← one per form, ~0px footprint at runtime
         │
         └── JSON config lists field A, B, C…
                  │
